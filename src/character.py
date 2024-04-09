@@ -1,6 +1,6 @@
 import math
 
-class Personnage:
+class Character:
     def __init__(self, height, strength_items, agility_items, proficiency_items, resistance_items, life_items):
         self.height = height
         self.strength_items = strength_items
@@ -20,7 +20,7 @@ class Personnage:
     def performance(self):
         pass
 
-class Warrior(Personnage):
+class Warrior(Character):
     def performance(self):
         strength_coeff = 100 * math.tanh(0.01 * self.strength_items)
         agility_coeff = math.tanh(0.01 * self.agility_items)
@@ -36,7 +36,7 @@ class Warrior(Personnage):
 
         return 0.6 * attack + 0.4 * defense
 
-class Archer(Personnage):
+class Archer(Character):
     def performance(self):
         strength_coeff = 100 * math.tanh(0.01 * self.strength_items)
         agility_coeff = math.tanh(0.01 * self.agility_items)
@@ -52,7 +52,7 @@ class Archer(Personnage):
 
         return 0.9 * attack + 0.1 * defense
 
-class Defender(Personnage):
+class Defender(Character):
     def performance(self):
         strength_coeff = 100 * math.tanh(0.01 * self.strength_items)
         agility_coeff = math.tanh(0.01 * self.agility_items)
@@ -68,7 +68,7 @@ class Defender(Personnage):
 
         return 0.1 * attack + 0.9 * defense
 
-class Infiltrator(Personnage):
+class Infiltrator(Character):
     def performance(self):
         strength_coeff = 100 * math.tanh(0.01 * self.strength_items)
         agility_coeff = math.tanh(0.01 * self.agility_items)

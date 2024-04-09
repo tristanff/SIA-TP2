@@ -15,7 +15,7 @@ print("Infiltrator Perfomance : ", my_infiltrator.performance())
 
 
 #Basic function to create random personnages with items = 150 - 5 by 5 for each items
-def fabrique_personnages():
+def character_Factory():
     personnages = []
 
     for strength_items in range(0, 151, 5):
@@ -32,7 +32,7 @@ def fabrique_personnages():
 
     return personnages
 
-personnages = fabrique_personnages()
+personnages = character_Factory()
 
 
 best_personnage = max(personnages, key=lambda x: x.performance())
