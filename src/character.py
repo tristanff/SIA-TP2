@@ -12,7 +12,7 @@ class Personnage:
         #Raise an error if sum of items not equal to 150
         total_items = strength_items + agility_items + proficiency_items + resistance_items + life_items
         if total_items != 150:
-            raise ValueError("La somme des attributs _items doit être égale à 150.")
+            raise ValueError("Items sum of items must 150.")
 
 
 
