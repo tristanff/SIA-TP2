@@ -16,7 +16,7 @@ print("Infiltrator Perfomance : ", my_infiltrator.performance())
 
 #Basic function to create random personnages with items = 150 - 5 by 5 for each items
 def character_Factory():
-    personnages = []
+    characters = []
 
     for strength_items in range(0, 151, 5):
         for agility_items in range(0, 151 - strength_items, 5):
@@ -25,37 +25,37 @@ def character_Factory():
                     life_items = 150 - (strength_items + agility_items + proficiency_items + resistance_items)
                     if life_items % 5 == 0:
                         height = 1.7  #Default value for testing
-                        personnages.append(Warrior(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
-                        personnages.append(Archer(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
-                        personnages.append(Infiltrator(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
-                        personnages.append(Defender(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
+                        characters.append(Warrior(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
+                        characters.append(Archer(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
+                        characters.append(Infiltrator(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
+                        characters.append(Defender(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
 
-    return personnages
+    return characters
 
-personnages = character_Factory()
+characters = character_Factory()
 
 
-best_personnage = max(personnages, key=lambda x: x.performance())
-for idx, personnage in enumerate(personnages):
-    print(f"Personnage {idx+1} ({type(personnage).__name__}):")
-    print(f"  - Strength Items: {personnage.strength_items}")
-    print(f"  - Agility Items: {personnage.agility_items}")
-    print(f"  - Proficiency Items: {personnage.proficiency_items}")
-    print(f"  - Resistance Items: {personnage.resistance_items}")
-    print(f"  - Life Items: {personnage.life_items}")
-    print(f"  - Performance : {personnage.performance()}")
+best_character = max(characters, key=lambda x: x.performance())
+for idx, character in enumerate(characters):
+    print(f"Character {idx+1} ({type(character).__name__}):")
+    print(f"  - Strength Items: {character.strength_items}")
+    print(f"  - Agility Items: {character.agility_items}")
+    print(f"  - Proficiency Items: {character.proficiency_items}")
+    print(f"  - Resistance Items: {character.resistance_items}")
+    print(f"  - Life Items: {character.life_items}")
+    print(f"  - Performance : {character.performance()}")
     print()
 
 
-best_personnage = max(personnages, key=lambda x: x.performance())
+best_character = max(characters, key=lambda x: x.performance())
 
-print(f"Best_Personnage {idx + 1} ({type(best_personnage).__name__}):")
-print(f"  - Strength Items: {best_personnage.strength_items}")
-print(f"  - Agility Items: {best_personnage.agility_items}")
-print(f"  - Proficiency Items: {best_personnage.proficiency_items}")
-print(f"  - Resistance Items: {best_personnage.resistance_items}")
-print(f"  - Life Items: {best_personnage.life_items}")
-print(f"  - Performance : {best_personnage.performance()}")
+print(f"Best_Character {idx + 1} ({type(best_character).__name__}):")
+print(f"  - Strength Items: {best_character.strength_items}")
+print(f"  - Agility Items: {best_character.agility_items}")
+print(f"  - Proficiency Items: {best_character.proficiency_items}")
+print(f"  - Resistance Items: {best_character.resistance_items}")
+print(f"  - Life Items: {best_character.life_items}")
+print(f"  - Performance : {best_character.performance()}")
 
 
 
