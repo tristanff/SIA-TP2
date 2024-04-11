@@ -20,6 +20,9 @@ class Character:
     def performance(self):
         pass
 
+    def get_gen(self):
+        return 1  # Change later for building which genes for mutation
+
 class Warrior(Character):
     def performance(self):
         strength_coeff = 100 * math.tanh(0.01 * self.strength_items)
