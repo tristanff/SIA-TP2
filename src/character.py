@@ -11,7 +11,7 @@ class Character:
         self.life_items = life_items
 
         #Raise an error if sum of items not equal to 150
-        total_items = strength_items + agility_items + proficiency_items + resistance_items + life_items
+        total_items = round(strength_items + agility_items + proficiency_items + resistance_items + life_items,2)
         if total_items != 150:
             raise ValueError("Items sum of items must 150.")
 
@@ -47,5 +47,11 @@ class Character:
             defense = (resistance_coeff + proficiency_coeff) * life_coeff * defense_modifier
             return 0.8 * attack + 0.3 * defense
 
-    def get_gen(self):
-            return 1
+    def get_genes(self):
+        return [self.height,self.strength_items,self.agility_items,self.proficiency_items,self.resistance_items,self.life_items]
+
+    def setattr(self, attribute, value):
+        setattr(self, attribute, value)
+
+    def getattr(self, attribute):
+        return getattr(self, attribute)
