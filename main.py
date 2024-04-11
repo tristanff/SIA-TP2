@@ -1,43 +1,35 @@
-from src.character import Warrior,Archer,Defender,Infiltrator
+from src.character import Character
+import random
 
 
-my_warrior = Warrior(height=1.75, strength_items=52.5, agility_items=22.5, proficiency_items=31.0, resistance_items=21.0, life_items=23.0)
-my_archer = Archer(height=1.62, strength_items=21.0, agility_items=52.0, proficiency_items=31.0, resistance_items=20.5, life_items=25.5)
-my_defender = Defender(height=1.93, strength_items=51.0, agility_items=20.0, proficiency_items=21.0, resistance_items=50.0, life_items=8.0)
-my_infiltrator = Infiltrator(height=1.65, strength_items=31.5, agility_items=41.0, proficiency_items=41.5, resistance_items=21.0, life_items=15.0)
+def generate_start_population(population_size):
+    character_names = ["Warrior", "Archer", "Defender", "Infiltrator"]
+    population = []
+
+    for character_name in character_names:
+        for _ in range(population_size):
+            height = round(random.uniform(1.3, 2), 3)
+
+            #Generation of 4 random uniform float
+            attributes = [random.uniform(10, 50) for _ in range(4)]
+
+            #Technique used to be sure that the sum is always equal to 150
+            total_attributes = sum(attributes)
+            normalized_attributes = [attr / total_attributes * 150 for attr in attributes]
+            normalized_attributes = [round(attr, 2) for attr in normalized_attributes]
+
+            life_items = 150 - sum(normalized_attributes)
+
+            # Créer l'instance du personnage avec les attributs normalisés et arrondis
+            individual = Character(character_name, height, *normalized_attributes, life_items)
+            population.append(individual)
+
+    return population
+characters = generate_start_population(100)
 
 
-print("Warrior Performance : ", my_warrior.performance())
-print("Archer Performance : ", my_archer.performance())
-print("Defender Perfomance : ", my_defender.performance())
-print("Infiltrator Perfomance : ", my_infiltrator.performance())
-
-
-
-#Basic function to create random personnages with items = 150 - 5 by 5 for each items
-def character_Factory():
-    characters = []
-
-    for strength_items in range(0, 151, 5):
-        for agility_items in range(0, 151 - strength_items, 5):
-            for proficiency_items in range(0, 151 - strength_items - agility_items, 5):
-                for resistance_items in range(0, 151 - strength_items - agility_items - proficiency_items, 5):
-                    life_items = 150 - (strength_items + agility_items + proficiency_items + resistance_items)
-                    if life_items % 5 == 0:
-                        height = 1.7  #Default value for testing
-                        characters.append(Warrior(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
-                        characters.append(Archer(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
-                        characters.append(Infiltrator(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
-                        characters.append(Defender(height, strength_items, agility_items, proficiency_items, resistance_items, life_items))
-
-    return characters
-
-characters = character_Factory()
-
-
-best_character = max(characters, key=lambda x: x.performance())
 for idx, character in enumerate(characters):
-    print(f"Character {idx+1} ({type(character).__name__}):")
+    print(f"Character {idx+1} ({character.name}):")
     print(f"  - Strength Items: {character.strength_items}")
     print(f"  - Agility Items: {character.agility_items}")
     print(f"  - Proficiency Items: {character.proficiency_items}")
@@ -49,7 +41,7 @@ for idx, character in enumerate(characters):
 
 best_character = max(characters, key=lambda x: x.performance())
 
-print(f"Best_Character {idx + 1} ({type(best_character).__name__}):")
+print(f"Best_Character {idx + 1} ({best_character.name}):")
 print(f"  - Strength Items: {best_character.strength_items}")
 print(f"  - Agility Items: {best_character.agility_items}")
 print(f"  - Proficiency Items: {best_character.proficiency_items}")
