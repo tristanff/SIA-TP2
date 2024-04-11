@@ -46,3 +46,6 @@ class Character:
             attack = (agility_coeff + proficiency_coeff) * strength_coeff * attack_modifier
             defense = (resistance_coeff + proficiency_coeff) * life_coeff * defense_modifier
             return 0.8 * attack + 0.3 * defense
+
+        def get_gen(self):
+            return 1
