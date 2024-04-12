@@ -26,21 +26,20 @@ def universal_selection(population, num_parents):
     if fitness_sum == 0:
         raise ValueError("The sum of performances is zero.")
 
-    # Calculate selection probabilities
+    # Calculate selection probabilities and cumulative probabilities
     probabilities = [individual.performance() / fitness_sum for individual in population]
+    cumulative_probabilities = [sum(probabilities[:i+1]) for i in range(len(probabilities))]
 
     # Select parents
     selected_parents = []
     for _ in range(num_parents):
-        # Generate a random pointer in the range [0, fitness_sum)
-        pointer = random.uniform(0, fitness_sum)
-        cumulative_probability = 0
+        # Generate a random pointer in the range [0, 1)
+        pointer = random.random()
 
-        # Iterate over the population to find the individual corresponding to the pointer
-        for individual, probability in zip(population, probabilities):
-            cumulative_probability += probability
-            if cumulative_probability > pointer:
-                selected_parents.append(individual)
+        # Find the individual corresponding to the pointer
+        for i, cumulative_probability in enumerate(cumulative_probabilities):
+            if pointer <= cumulative_probability:
+                selected_parents.append(population[i])
                 break
 
     return selected_parents
@@ -88,3 +87,4 @@ def ranking_selection(population, num_parents):
     # Select parents using ranking selection
     parents = np.random.choice(sorted_population, num_parents, p=probabilities)
     return parents
+

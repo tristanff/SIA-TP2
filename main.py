@@ -172,7 +172,6 @@ print("Resistance items:", character.resistance_items)
 print("Life items:", character.life_items)
 
 
-
 uniform_mutation(characters,0.5)
 
 print("\nAfter Uniform Mutation :")
