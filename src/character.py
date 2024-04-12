@@ -20,6 +20,8 @@ class Character:
         if name not in valid_names:
             raise ValueError("Invalid character name")
 
+
+
     def performance(self):
         strength_coeff = 100 * math.tanh(0.01 * self.strength_items)
         agility_coeff = math.tanh(0.01 * self.agility_items)
@@ -55,3 +57,6 @@ class Character:
 
     def getattr(self, attribute):
         return getattr(self, attribute)
+
+
+

@@ -149,6 +149,15 @@ print("Proficiency items:", character.proficiency_items)
 print("Resistance items:", character.resistance_items)
 print("Life items:", character.life_items)
 
+gene_mutation(character, 1)
+
+print("\nAfter Gen Mutation :")
+print("Height:", character.height)
+print("Strength items:", character.strength_items)
+print("Agility items:", character.agility_items)
+print("Proficiency items:", character.proficiency_items)
+print("Resistance items:", character.resistance_items)
+print("Life items:", character.life_items)
 
 # Mutation multigène
 multigene_mutation(character,1)
@@ -162,15 +171,14 @@ print("Proficiency items:", character.proficiency_items)
 print("Resistance items:", character.resistance_items)
 print("Life items:", character.life_items)
 
-gene_mutation(character,1)
 
-print("\nAfter Mutation :")
+
+uniform_mutation(characters,0.5)
+
+print("\nAfter Uniform Mutation :")
 print("Height:", character.height)
 print("Strength items:", character.strength_items)
 print("Agility items:", character.agility_items)
 print("Proficiency items:", character.proficiency_items)
 print("Resistance items:", character.resistance_items)
 print("Life items:", character.life_items)
-
-uniform_mutation(characters,0.5)
-
