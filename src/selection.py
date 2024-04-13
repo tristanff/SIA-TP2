@@ -10,11 +10,11 @@ def selection(population, config):
     elif config['selection']['method'] == 'universal':
         return universal_selection(population, int(config['selection']['num_parents']))
     elif config['selection']['method'] == 'boltzmann':
-        t0 = config["selection_temperature_t0"]
-        t1 = config['selection_temperature_t1"']
-        k = config["selection_temperature_k"]
-        temperature = t1 + (t0 - t1) * math.exp(-k * selection_amount) #not correct but need to add this
-        return boltzmann_selection(population, float(config['selection']['temperature']))
+        t0 = int(config['selection']['t0'])
+        t1 = int(config['selection']['t1'])
+        k = int(config['selection']['k'])
+        temperature = t1 + (t0 - t1) * math.exp(-k * int(config['selection']['num_parents']))
+        return boltzmann_selection(population, temperature)
     elif config['selection']['method'] == 'deterministic_tournament':
         return deterministic_tournament_selection(population, int(config['selection']['num_parents']),
                                                   int(config['selection']['tournament_size']))
@@ -25,6 +25,7 @@ def selection(population, config):
         return ranking_selection(population, int(config['selection']['num_parents']))
     else:
         raise ValueError("Invalid selection method: {}".format(config['selection']['method']))
+
 
 
 def elite_selection(population, num_elites):
