@@ -1,12 +1,33 @@
 import random
 import numpy as np
 
+
+def selection(population, selection_method, num_parents, tournament_size=None, threshold=None, temperature=None):
+    if selection_method == 'elite':
+        return elite_selection(population, num_parents)
+    elif selection_method == 'roulette':
+        return roulette_wheel_selection(population, num_parents)
+    elif selection_method == 'universal':
+        return universal_selection(population, num_parents)
+    elif selection_method == 'boltzmann':
+        return boltzmann_selection(population, temperature)
+    elif selection_method == 'deterministic_tournament':
+        return deterministic_tournament_selection(population, num_parents, tournament_size)
+    elif selection_method == 'probabilistic_tournament':
+        return probabilistic_tournament_selection(population, num_parents, threshold)
+    elif selection_method == 'ranking':
+        return ranking_selection(population, num_parents)
+    else:
+        raise ValueError("Invalid selection method: {}".format(selection_method))
+
+
 def elite_selection(population, num_elites):
     # Sort the population based on performance in descending order
     sorted_population = sorted(population, key=lambda x: x.performance(), reverse=True)
     # Select the top individuals as elites
     elites = sorted_population[:num_elites]
     return elites
+
 
 def roulette_wheel_selection(population, num_parents):
     # Calculate the sum of performances in the population
@@ -44,6 +65,7 @@ def universal_selection(population, num_parents):
 
     return selected_parents
 
+
 def boltzmann_selection(population, temperature):
     # Calculate fitness values and exponential values
     fitness_values = [individual.performance() for individual in population]
@@ -54,6 +76,7 @@ def boltzmann_selection(population, temperature):
     parent = np.random.choice(population, p=probabilities)
     return parent
 
+
 def deterministic_tournament_selection(population, num_parents, tournament_size):
     selected_parents = []
     for _ in range(num_parents):
@@ -63,6 +86,7 @@ def deterministic_tournament_selection(population, num_parents, tournament_size)
         best_individual = max(tournament_candidates, key=lambda individual: individual.performance())
         selected_parents.append(best_individual)
     return selected_parents
+
 
 def probabilistic_tournament_selection(population, num_parents, threshold):
     selected_parents = []
@@ -78,6 +102,7 @@ def probabilistic_tournament_selection(population, num_parents, threshold):
             selected_individual = min(ind1, ind2, key=lambda individual: individual.performance())
         selected_parents.append(selected_individual)
     return selected_parents
+
 
 def ranking_selection(population, num_parents):
     # Sort the population based on performance in descending order

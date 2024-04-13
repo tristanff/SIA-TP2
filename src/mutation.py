@@ -1,6 +1,15 @@
 import random
 
 
+def mutation(individual, mutation_alg, mutation_rate):
+    if mutation_alg == 'gene':
+        return gene_mutation(individual, mutation_rate)
+    if mutation_alg == 'multigene':
+        return multigene_mutation(individual, mutation_rate)
+    if mutation_alg == 'uniform':
+        return uniform_mutation(individual, mutation_rate)
+
+
 # Only one gene of one individual mutate
 def gene_mutation(individual, mutation_rate):
     mutated_individual = individual
@@ -52,6 +61,7 @@ def multigene_mutation(individual, mutation_rate):
             mutated_individual.height = max(round(random.uniform(1.3, 2), 3), 0.0)  # Ensure height is between 1.3 and 2, and positive
     return mutated_individual
 
+
 # Multiple genes of multiples individuals can mutate
 def uniform_mutation(individuals, mutation_rate):
     mutated_individuals = []
@@ -76,6 +86,6 @@ def uniform_mutation(individuals, mutation_rate):
             if random.random() < mutation_rate:
                 mutated_individual.height = max(round(random.uniform(1.3, 2), 3),
                                                 0.0)  # Ensure height is between 1.3 and 2, and positive
-
+                
     return mutated_individuals
 

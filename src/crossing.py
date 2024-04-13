@@ -2,7 +2,7 @@ import random
 from character import Character
 
 
-def crossing_op(p1, p2, cross_alg):
+def crossover(p1, p2, cross_alg):
     if cross_alg == 'one_point':
         return one_point(p1, p2)
     if cross_alg == 'two_point':

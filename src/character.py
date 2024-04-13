@@ -16,7 +16,7 @@ class Character:
             raise ValueError("Items sum of items must 150.")
 
         # Raise an error if the name is not valid
-        valid_names = ["Warrior", "Archer", "Defender", "Infiltrator"]
+        valid_names = ["warrior", "archer", "defender", "infiltrator"]
         if name not in valid_names:
             raise ValueError("Invalid character name")
 
@@ -32,21 +32,16 @@ class Character:
         attack_modifier = 0.5 - (3*self.height - 5)**4 + (3*self.height - 5)**2 + self.height/2
         defense_modifier = 2 + (3*self.height - 5)**4 - (3*self.height - 5)**2 - self.height/2
 
+        attack = (agility_coeff + proficiency_coeff) * strength_coeff * attack_modifier
+        defense = (resistance_coeff + proficiency_coeff) * life_coeff * defense_modifier
+
         if self.name == "Warrior":
-            attack = (agility_coeff + proficiency_coeff) * strength_coeff * attack_modifier
-            defense = (resistance_coeff + proficiency_coeff) * life_coeff * defense_modifier
             return 0.6 * attack + 0.4 * defense
         elif self.name == "Archer":
-            attack = (agility_coeff + proficiency_coeff) * strength_coeff * attack_modifier
-            defense = (resistance_coeff + proficiency_coeff) * life_coeff * defense_modifier
             return 0.9 * attack + 0.1 * defense
         elif self.name == "Defender":
-            attack = (agility_coeff + proficiency_coeff) * strength_coeff * attack_modifier
-            defense = (resistance_coeff + proficiency_coeff) * life_coeff * defense_modifier
             return 0.1 * attack + 0.9 * defense
         elif self.name == "Infiltrator":
-            attack = (agility_coeff + proficiency_coeff) * strength_coeff * attack_modifier
-            defense = (resistance_coeff + proficiency_coeff) * life_coeff * defense_modifier
             return 0.8 * attack + 0.3 * defense
 
     def get_genes(self):
