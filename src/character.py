@@ -35,13 +35,13 @@ class Character:
         attack = (agility_coeff + proficiency_coeff) * strength_coeff * attack_modifier
         defense = (resistance_coeff + proficiency_coeff) * life_coeff * defense_modifier
 
-        if self.name == "Warrior":
+        if self.name == "warrior":
             return 0.6 * attack + 0.4 * defense
-        elif self.name == "Archer":
+        elif self.name == "archer":
             return 0.9 * attack + 0.1 * defense
-        elif self.name == "Defender":
+        elif self.name == "defender":
             return 0.1 * attack + 0.9 * defense
-        elif self.name == "Infiltrator":
+        elif self.name == "infiltrator":
             return 0.8 * attack + 0.3 * defense
 
     def get_genes(self):

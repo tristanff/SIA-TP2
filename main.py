@@ -13,7 +13,7 @@ with open('config.json') as config_file:
 
 
 def generate_start_population(population_size):
-    character_names = ["Warrior", "Archer", "Defender", "Infiltrator"]
+    character_names = ["warrior", "archer", "defender", "infiltrator"]
     population = []
 
     for character_name in character_names:
@@ -157,7 +157,7 @@ print("\ntesting replacing youth:")
 for population in selected_replacement_youth:
     print(population.name)
 
-character = Character("Warrior", 1.75, 30, 40, 50, 20, 10)
+character = Character("warrior", 1.75, 30, 40, 50, 20, 10)
 
 # Affichage des attributs avant la mutation
 print("\nBefore mutation :")
