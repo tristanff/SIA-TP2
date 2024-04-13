@@ -1,5 +1,6 @@
 from src.character import *
 import random
+import json
 import numpy as np
 from src.crossover import one_point_crossover, two_point_crossover, uniform_crossover, annular_crossover
 from src.mutation import uniform_mutation, multigene_mutation, gene_mutation
@@ -7,6 +8,8 @@ from src.selection import roulette_wheel_selection, elite_selection, universal_s
     ranking_selection , deterministic_tournament_selection ,probabilistic_tournament_selection
 from src.replacement import *
 
+with open('config.json') as config_file:
+    config = json.load(config_file)
 
 
 def generate_start_population(population_size):
