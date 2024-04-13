@@ -2,23 +2,25 @@ import random
 import numpy as np
 
 
-def selection(population, selection_method, num_parents, tournament_size=None, threshold=None, temperature=None):
-    if selection_method == 'elite':
-        return elite_selection(population, num_parents)
-    elif selection_method == 'roulette':
-        return roulette_wheel_selection(population, num_parents)
-    elif selection_method == 'universal':
-        return universal_selection(population, num_parents)
-    elif selection_method == 'boltzmann':
-        return boltzmann_selection(population, temperature)
-    elif selection_method == 'deterministic_tournament':
-        return deterministic_tournament_selection(population, num_parents, tournament_size)
-    elif selection_method == 'probabilistic_tournament':
-        return probabilistic_tournament_selection(population, num_parents, threshold)
-    elif selection_method == 'ranking':
-        return ranking_selection(population, num_parents)
+def selection(population, config):
+    if config['selection']['method'] == 'elite':
+        return elite_selection(population, int(config['selection']['num_parents']))
+    elif config['selection']['method'] == 'roulette':
+        return roulette_wheel_selection(population, int(config['selection']['num_parents']))
+    elif config['selection']['method'] == 'universal':
+        return universal_selection(population, int(config['selection']['num_parents']))
+    elif config['selection']['method'] == 'boltzmann':
+        return boltzmann_selection(population, float(config['selection']['temperature']))
+    elif config['selection']['method'] == 'deterministic_tournament':
+        return deterministic_tournament_selection(population, int(config['selection']['num_parents']),
+                                                  int(config['selection']['tournament_size']))
+    elif config['selection']['method'] == 'probabilistic_tournament':
+        return probabilistic_tournament_selection(population, int(config['selection']['num_parents']),
+                                                  float(config['selection']['threshold']))
+    elif config['selection']['method'] == 'ranking':
+        return ranking_selection(population, int(config['selection']['num_parents']))
     else:
-        raise ValueError("Invalid selection method: {}".format(selection_method))
+        raise ValueError("Invalid selection method: {}".format(config['selection']['method']))
 
 
 def elite_selection(population, num_elites):

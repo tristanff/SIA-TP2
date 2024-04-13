@@ -1,7 +1,11 @@
 import configparser
 import random
-from src.character import *
 import numpy as np
+from src.character import *
+from src.selection import selection
+from src.crossover import crossover
+from src.mutation import mutation
+from src.replacement import *
 
 
 def read_config(filename):
@@ -35,8 +39,8 @@ def generate_start_population(population_class, population_size):
 
 config = read_config('config.ini')
 characters = generate_start_population(config['population']['class'], config['population']['size'])
-
-
+selected_parents = selection(characters, config)
+offspring = crossover(selected_parents, config['crossover']['method'], config['crossover']['rate'])
 
 
 

@@ -1,5 +1,20 @@
 import random
 
+def crossover(parent1, parent2, method, rate):
+    if random.random() > rate:
+        return parent1, parent2
+    else:
+        if method == 'one_point':
+            return one_point_crossover(parent1, parent2)
+        elif method == 'two_point':
+            return two_point_crossover(parent1, parent2)
+        elif method == 'uniform':
+            return uniform_crossover(parent1, parent2)
+        elif method == 'annular':
+            return annular_crossover(parent1, parent2)
+        else:
+            raise ValueError("Invalid crossover method: {}".format(method))
+
 def one_point_crossover(parent1, parent2):
     crossover_point = random.randint(1, len(parent1) - 1)
     child1 = parent1[:crossover_point] + parent2[crossover_point:]
