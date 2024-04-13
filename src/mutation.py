@@ -76,5 +76,6 @@ def uniform_mutation(individuals, mutation_rate):
             if random.random() < mutation_rate:
                 mutated_individual.height = max(round(random.uniform(1.3, 2), 3),
                                                 0.0)  # Ensure height is between 1.3 and 2, and positive
-        mutated_individuals.append(mutated_individual)
+
     return mutated_individuals
+

@@ -5,6 +5,8 @@ from src.crossover import one_point_crossover, two_point_crossover, uniform_cros
 from src.mutation import uniform_mutation, multigene_mutation, gene_mutation
 from src.selection import roulette_wheel_selection, elite_selection, universal_selection, boltzmann_selection, \
     ranking_selection , deterministic_tournament_selection ,probabilistic_tournament_selection
+from src.replacement import *
+
 
 
 def generate_start_population(population_size):
@@ -136,7 +138,21 @@ for parent in selected_parents_probabilistic:
 
 print("\nSelection of parents by rank :")
 for parent in selected_parents_ranking:
-    print(f"Nom: {parent.name}, Performance: {parent.performance()}")
+    print(f"Name: {parent.name}, Performance: {parent.performance()}")
+
+selected_replacement_traditional = []
+selected_replacement_youth = []
+parent = characters
+for parent_character in parent:
+    child = gene_mutation(parent_character, 1)
+    selected_replacement_traditional = replacement_op(parent, [child], 'traditional')
+    selected_replacement_youth = replacement_op(parent, [child], "youth")
+print("\ntesting replacement traditional:")
+for population in selected_replacement_traditional:
+    print(population.name)
+print("\ntesting replacing youth:")
+for population in selected_replacement_youth:
+    print(population.name)
 
 character = Character("Warrior", 1.75, 30, 40, 50, 20, 10)
 
