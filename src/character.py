@@ -10,7 +10,7 @@ class Character:
         self.resistance_items = resistance_items
         self.life_items = life_items
 
-        #Raise an error if sum of items not equal to 150
+        # Raise an error if sum of items not equal to 150
         total_items = round(strength_items + agility_items + proficiency_items + resistance_items + life_items,2)
         if total_items != 150:
             raise ValueError("Items sum of items must 150.")

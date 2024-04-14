@@ -148,8 +148,8 @@ selected_replacement_youth = []
 parent = characters
 for parent_character in parent:
     child = gene_mutation(parent_character, 1)
-    selected_replacement_traditional = replacement_op(parent, [child], 'traditional')
-    selected_replacement_youth = replacement_op(parent, [child], "youth")
+    selected_replacement_traditional = replacement(parent, [child], 'traditional')
+    selected_replacement_youth = replacement(parent, [child], "youth")
 print("\ntesting replacement traditional:")
 for population in selected_replacement_traditional:
     print(population.name)

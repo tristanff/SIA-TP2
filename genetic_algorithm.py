@@ -1,6 +1,7 @@
 import configparser
 import random
 import numpy as np
+import time
 from src.character import *
 from src.selection import selection
 from src.crossover import crossover
@@ -39,13 +40,44 @@ def generate_start_population(population_class, population_size):
 
 config = read_config('config.ini')
 characters = generate_start_population(config['population']['class'], config['population']['size'])
-selected_parents = selection(characters, config)
-offspring = crossover(selected_parents, config['crossover']['method'], config['crossover']['rate'])
+
+# Iteration through the generations
+print("gen     |max_fit |avg_fit |time (s)|detail  ")
+print("========|========|========|========|================================================")
+
+for generation in range(int(config['algorithm']['generations'])):
+    start_time = time.time()
+    # Generate offspring for generation
+    new_population = []
+    for _ in range(round(int(config['population']['size']) / 2)):
+        # Selection
+        selected_parents = selection(characters, config)
+
+        # Crossover
+        offspring1, offspring2 = crossover(*selected_parents, config['crossover']['method'], float(config['crossover']['rate']))
+
+        # Mutation
+        offspring1 = mutation(offspring1, config['mutation']['method'], float(config['mutation']['rate']))
+        offspring2 = mutation(offspring2, config['mutation']['method'], float(config['mutation']['rate']))
+
+        # Add to new population
+        new_population.append(offspring1)
+        new_population.append(offspring2)
+    
+    population = new_population
+    performances = [individual.performance() for individual in population]
+    max_performance = max(performances)
+    avg_performance = np.mean(performances)
+     
+    end_time = time.time()
+    max_fitness = round(max_performance, 2)
+    avg_fitness = round(avg_performance, 2)
+    time_elapsed = round(end_time - start_time, 2)
+    genes = population[np.argmax(performances)].get_genes()
 
 
-
-
-
+    print(f" {generation}  \t| {format(max_fitness, '.2f')}  | {format(avg_fitness, '.2f')}  | {format(time_elapsed, '.2f')}   | {genes}")
+    
 
 """
 

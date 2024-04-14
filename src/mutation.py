@@ -1,13 +1,16 @@
 import random
 
 
-def mutation(individual, mutation_alg, mutation_rate):
-    if mutation_alg == 'gene':
-        return gene_mutation(individual, mutation_rate)
-    if mutation_alg == 'multigene':
-        return multigene_mutation(individual, mutation_rate)
-    if mutation_alg == 'uniform':
-        return uniform_mutation(individual, mutation_rate)
+def mutation(individual, method, rate):
+    # Check if the individual will mutate
+    if random.random() > rate:
+        return individual
+
+    # If the individual will mutate, apply the mutation algorithm
+    try:
+        return globals()[method+"_mutation"](individual, rate)
+    except:
+        raise ValueError("Invalid mutation method: {}".format(method))
 
 
 # Only one gene of one individual mutate
