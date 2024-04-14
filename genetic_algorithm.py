@@ -45,7 +45,7 @@ def genetic_algorithm(filename):
     best_max_performance = 0
 
     # Iteration through the generations
-    print("gen     |max_fit |avg_fit |time (s)|detail  ")
+    print("gen     |time (s)|avg_fit |max_fit |   hei   str   agi   pro   res   lif")
     print("========|========|========|========|================================================")
 
     for generation in range(int(config['algorithm']['generations'])):
@@ -87,9 +87,9 @@ def genetic_algorithm(filename):
         genes = population[np.argmax(performances)].get_genes()
         genes = np.round(np.array(genes), 2)
 
-        print(f" {generation}  \t| {max_fitness:.2f}  | {avg_fitness:.2f}  | {time_elapsed:.0e}| {genes}")
+        print(f" {generation}  \t| {time_elapsed:.0e}\t | {avg_fitness:.2f}  | {max_fitness:.2f}  | {genes}")
         
-        if max_performance > best_max_performance:    
+        if max_performance > best_max_performance:
             best_max_performance = max_performance
             best_genes = genes
             best_generation = generation

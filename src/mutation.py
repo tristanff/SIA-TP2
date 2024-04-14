@@ -65,7 +65,7 @@ def multigene_mutation(individual, mutation_rate):
     return mutated_individual
 
 
-# Multiple genes of multiples individuals can mutate
+# Multiple genes of multiple individuals can mutate
 def uniform_mutation(individuals, mutation_rate):
     mutated_individuals = []
     for individual in individuals:
