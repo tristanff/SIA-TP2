@@ -38,97 +38,66 @@ def generate_start_population(population_class, population_size):
     return population
 
 
-config = read_config('config.ini')
-characters = generate_start_population(config['population']['class'], config['population']['size'])
+def genetic_algorithm(filename):
+    config = read_config(filename)
+    population = generate_start_population(config['population']['class'], config['population']['size'])
 
-# Iteration through the generations
-print("gen     |max_fit |avg_fit |time (s)|detail  ")
-print("========|========|========|========|================================================")
+    best_max_performance = 0
 
-for generation in range(int(config['algorithm']['generations'])):
-    start_time = time.time()
-    # Generate offspring for generation
-    new_population = []
-    for _ in range(round(int(config['population']['size']) / 2)):
-        # Selection
-        selected_parents = selection(characters, config)
+    # Iteration through the generations
+    print("gen     |max_fit |avg_fit |time (s)|detail  ")
+    print("========|========|========|========|================================================")
 
-        # Crossover
-        offspring1, offspring2 = crossover(*selected_parents, config['crossover']['method'], float(config['crossover']['rate']))
+    for generation in range(int(config['algorithm']['generations'])):
+        # Start timer
+        start_time = time.time()
 
-        # Mutation
-        offspring1 = mutation(offspring1, config['mutation']['method'], float(config['mutation']['rate']))
-        offspring2 = mutation(offspring2, config['mutation']['method'], float(config['mutation']['rate']))
+        # Initialize new population
+        offspring = []
 
-        # Add to new population
-        new_population.append(offspring1)
-        new_population.append(offspring2)
-    
-    population = new_population
-    performances = [individual.performance() for individual in population]
-    max_performance = max(performances)
-    avg_performance = np.mean(performances)
-     
-    end_time = time.time()
-    max_fitness = round(max_performance, 2)
-    avg_fitness = round(avg_performance, 2)
-    time_elapsed = round(end_time - start_time, 2)
-    genes = population[np.argmax(performances)].get_genes()
+        # Selection of parents
+        selected_parents = selection(population, config)
 
+        # Iterate through the selected parents to perform crossover and mutation
+        for i in range(0, len(selected_parents), 2):
+            # Crossover
+            child1, child2 = crossover(selected_parents[i], selected_parents[i+1], config['crossover']['method'], float(config['crossover']['rate']))
 
-    print(f" {generation}  \t| {format(max_fitness, '.2f')}  | {format(avg_fitness, '.2f')}  | {format(time_elapsed, '.2f')}   | {genes}")
-    
+            # Mutation
+            child1 = mutation(child1, config['mutation']['method'], float(config['mutation']['rate']))
+            child2 = mutation(child2, config['mutation']['method'], float(config['mutation']['rate']))
 
-"""
+            # Add to new population
+            offspring.append(child1)
+            offspring.append(child2)
 
+        # Replacement
+        new_population = replacement(population, offspring, config)
+        
+        # Record and print results
+        population = new_population
+        performances = [individual.performance() for individual in population]
+        max_performance = max(performances)
+        avg_performance = np.mean(performances)
 
-from genetic_algorithm import selection_op, crossover_op, mutation_op
+        end_time = time.time()
+        max_fitness = round(max_performance, 2)
+        avg_fitness = round(avg_performance, 2)
+        time_elapsed = round(end_time - start_time, 2)
+        genes = population[np.argmax(performances)].get_genes()
+        genes = np.round(np.array(genes), 2)
 
-# Load configuration parameters
-with open('config.json') as f:
-    config = json.load(f)
+        print(f" {generation}  \t| {max_fitness:.2f}  | {avg_fitness:.2f}  | {time_elapsed:.0e}| {genes}")
+        
+        if max_performance > best_max_performance:    
+            best_max_performance = max_performance
+            best_genes = genes
+            best_generation = generation
+            
+    print("=====================END=======================")
+    print(f"Best performance: {best_max_performance}")
+    print(f"First found at generation: {best_generation}")
+    print(f"Genes: {best_genes}")
+    print("===============================================")
 
-def generate_start_population(population_size):
-    character_names = ["Warrior", "Archer", "Defender", "Infiltrator"]
-    population = []
-
-    for character_name in character_names:
-        for _ in range(population_size):
-            height = round(random.uniform(1.3, 2), 3)
-
-            attributes = np.random.random(5)
-
-            # Calculate the sum of attributes
-            total_attributes = sum(attributes)
-
-            # Normalize the attributes to have a sum of 150
-            normalized_attributes = [round((attr / total_attributes) * 150,3) for attr in attributes]
-
-            # Create the character instance with the normalized and rounded attributes
-            individual = Character(character_name, height, *normalized_attributes)
-            population.append(individual)
-
-    return population
-
-
-
-# Initialize population
-population = [Character.random(config['character_type']) for _ in range(config['population_size'])]
-
-# Run the genetic algorithm
-for _ in range(config['num_generations']):
-    # Evaluate fitness
-    fitnesses = [individual.performance() for individual in population]
-
-    # Select parents
-    parents = selection_op(population, fitnesses, config['selection_type'], config['num_parents'])
-
-    # Perform crossover
-    offspring = crossover_op(parents, config['crossover_rate'])
-
-    # Apply mutation
-    population = mutation_op(offspring, config['mutation_rate'])
-
-# Return the best individual
-best_individual = max(population, key=lambda individual: individual.performance())
-"""
+genetic_algorithm('config.ini')

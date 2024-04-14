@@ -1,11 +1,20 @@
 import random
 
 
-def replacement(parent, child, replacement):
-    if replacement == 'traditional':
+def replacement(parent, child, config):
+    # Pick replacement method based on replacement probability
+    if random.random() < float(config['replacement']['replacement_probability']):
+        method = config['replacement']['method1']
+    else:
+        method = config['replacement']['method2']
+    
+    # Select replacement method
+    if method == 'traditional':
         return traditional_replacement(parent, child)
-    if replacement == 'youth':
+    elif method == 'youth':
         return youth_replacement(parent, child)
+    else:
+        raise ValueError("Invalid replacement method: {}".format(method))
 
 
 #metodo3
