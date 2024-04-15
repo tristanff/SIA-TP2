@@ -98,8 +98,6 @@ print("Parent 2 genes:", genes2)
 print("Child 1 genes:", child1_annular_genes)
 print("Child 2 genes:", child2_annular_genes)
 
-
-
 # Random Value for testing
 num_parents = 3
 num_elites = 3
@@ -107,6 +105,54 @@ temperature = 1.0
 tournament_size = 1
 threshold = 0.5
 
+selected_parents_elite = elite_selection(characters, num_elites)
+selected_parents_roulette = roulette_wheel_selection(characters, num_parents)
+selected_parents_universal = universal_selection(characters, num_parents)
+selected_parent_boltzmann = boltzmann_selection(characters, temperature)
+selected_parents_ranking = ranking_selection(characters, num_parents)
+selected_parents_deterministic = deterministic_tournament_selection(characters, num_parents,tournament_size)
+selected_parents_probabilistic = probabilistic_tournament_selection(characters,num_parents,threshold)
+
+print("Selection of parents by elite selection:")
+for parent in selected_parents_elite:
+    print(f"Name: {parent.name}, Performance: {parent.performance()}")
+
+print("\nSelection of parents by roulette wheel selection:")
+for parent in selected_parents_roulette:
+    print(f"Name: {parent.name}, Performance: {parent.performance()}")
+
+print("\nSelection of parents by universal selection:")
+for parent in selected_parents_universal:
+    print(f"Name: {parent.name}, Performance: {parent.performance()}")
+
+print("\nSelection of parent by Boltzmann selection:")
+print(f"Name: {selected_parent_boltzmann.name}, Performance: {selected_parent_boltzmann.performance()}")
+
+print("\nSelection of parents by deterministic tournaments selection:")
+for parent in selected_parents_deterministic:
+    print(f"Name: {parent.name}, Performance: {parent.performance()}")
+
+print("\nSelection of parents by probabilistic tournaments selection:")
+for parent in selected_parents_probabilistic:
+    print(f"Name: {parent.name}, Performance: {parent.performance()}")
+
+print("\nSelection of parents by rank :")
+for parent in selected_parents_ranking:
+    print(f"Name: {parent.name}, Performance: {parent.performance()}")
+
+selected_replacement_traditional = []
+selected_replacement_youth = []
+parent = characters
+for parent_character in parent:
+    child = gene_mutation(parent_character, 1)
+    selected_replacement_traditional = replacement(parent, [child], 'traditional')
+    selected_replacement_youth = replacement(parent, [child], "youth")
+print("\ntesting replacement traditional:")
+for population in selected_replacement_traditional:
+    print(population.name)
+print("\ntesting replacing youth:")
+for population in selected_replacement_youth:
+    print(population.name)
 
 character = Character("warrior", 1.75, 30, 40, 50, 20, 10)
 
