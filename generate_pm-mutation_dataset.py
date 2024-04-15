@@ -61,7 +61,7 @@ def genetic_algorithm(config, p_m_values, selection_methods):
         print(f"Results for selection method '{selection_method}' saved to {output_filename}")
 
 if __name__ == "__main__":
-    config = read_config('../config.ini')
+    config = read_config('config.ini')
     p_m_values = [0.1, 0.25, 0.5, 0.75, 0.9]
     selection_methods = ['elite', 'roulette', 'universal', 'boltzmann', 'deterministic_tournament', 'probabilistic_tournament', 'ranking']
     genetic_algorithm(config, p_m_values, selection_methods)
