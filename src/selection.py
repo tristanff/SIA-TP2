@@ -12,31 +12,31 @@ def selection(population, config):
 
     # Select parents based on the chosen selection method
     if method == 'elite':
-        num_parents = int(config['selection']['num_parents'])
+        num_parents = int(config['selection']['selection_amount'])
         return elite_selection(population, num_parents)
     elif method == 'roulette':
-        num_parents = int(config['selection']['num_parents'])
+        num_parents = int(config['selection']['selection_amount'])
         return roulette_wheel_selection(population, num_parents)
     elif method == 'universal':
-        num_parents = int(config['selection']['num_parents'])
+        num_parents = int(config['selection']['selection_amount'])
         return universal_selection(population, num_parents)
     elif method == 'boltzmann':
         t0 = int(config['selection']['t0'])
         t1 = int(config['selection']['t1'])
         k = int(config['selection']['k'])
-        num_parents = int(config['selection']['num_parents'])
+        num_parents = int(config['selection']['selection_amount'])
         temperature = t1 + (t0 - t1) * math.exp(-k * num_parents)
-        return boltzmann_selection(population, temperature)
+        return boltzmann_selection(population, num_parents, temperature)
     elif method == 'deterministic_tournament':
-        num_parents = int(config['selection']['num_parents'])
-        tournament_size = float(config['selection']['tournament_size'])
+        num_parents = int(config['selection']['selection_amount'])
+        tournament_size = int(config['selection']['tournament_size'])
         return deterministic_tournament_selection(population, num_parents, tournament_size)
     elif method == 'probabilistic_tournament':
-        num_parents = int(config['selection']['num_parents'])
+        num_parents = int(config['selection']['selection_amount'])
         threshold = float(config['selection']['threshold'])
         return probabilistic_tournament_selection(population, num_parents, threshold)
     elif method == 'ranking':
-        num_parents = int(config['selection']['num_parents'])
+        num_parents = int(config['selection']['selection_amount'])
         return ranking_selection(population, num_parents)
     else:
         raise ValueError("Invalid selection method: {}".format(config['selection']['method']))
@@ -87,14 +87,14 @@ def universal_selection(population, num_parents):
     return selected_parents
 
 
-def boltzmann_selection(population, temperature):
+def boltzmann_selection(population, num_parents, temperature):
     # Calculate fitness values and exponential values
     fitness_values = [individual.performance() for individual in population]
     exp_values = [np.exp(fitness / temperature) for fitness in fitness_values]
     # Calculate probabilities
     probabilities = [exp_value / sum(exp_values) for exp_value in exp_values]
     # Select parent using Boltzmann selection
-    parent = np.random.choice(population, p=probabilities)
+    parent = np.random.choice(population, num_parents, p=probabilities)
     return parent
 
 

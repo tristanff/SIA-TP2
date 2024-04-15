@@ -2,6 +2,7 @@ import configparser
 import random
 import numpy as np
 import time
+import json
 from src.character import *
 from src.selection import selection
 from src.crossover import crossover
@@ -80,24 +81,62 @@ def genetic_algorithm(filename):
         max_performance = max(performances)
         avg_performance = np.mean(performances)
 
+        # Record data for analysis
+        x1.append(avg_performance)
+        x2.append(best_max_performance)
+        genes = [individual.get_genes() for individual in population]
+        x3.append(np.sum(np.std(genes, axis=0)))
+
+        # Record notable results
         end_time = time.time()
         max_fitness = round(max_performance, 2)
         avg_fitness = round(avg_performance, 2)
         time_elapsed = round(end_time - start_time, 2)
-        genes = population[np.argmax(performances)].get_genes()
-        genes = np.round(np.array(genes), 2)
+        max_genes = population[np.argmax(performances)].get_genes()
+        max_genes = np.round(np.array(max_genes), 2)
 
-        print(f" {generation}  \t| {time_elapsed:.0e}\t | {avg_fitness:.2f}  | {max_fitness:.2f}  | {genes}")
+        print(f" {generation}  \t| {time_elapsed:.0e}\t | {avg_fitness:.2f}  | {max_fitness:.2f}  | {max_genes}")
         
         if max_performance > best_max_performance:
             best_max_performance = max_performance
-            best_genes = genes
+            best_genes = max_genes
             best_generation = generation
-            
+    
+    # Print final results
     print("=====================END=======================")
-    print(f"Best performance: {best_max_performance}")
+    print(f"Best performance: {best_max_performance:.2f}")
     print(f"First found at generation: {best_generation}")
     print(f"Genes: {best_genes}")
     print("===============================================")
 
+    # Save to output file
+    with open("analysis/output", "w") as fp:
+        json.dump([x1, x2, x3], fp)
+ 
+
+x1 = []
+x2 = []
+x3 = []
+
+
 genetic_algorithm('config.ini')
+
+"""
+import matplotlib.pyplot as plt
+plt.plot(x2, label='best fitness found so far')
+plt.plot(x1, label='generation average fitness')
+plt.xlabel('Generation')
+plt.ylabel('Fitness')
+plt.title("Evolution of average and max fitness")
+plt.legend()
+plt.show()
+
+
+plt.figure()
+plt.plot(x3)
+plt.xlabel('Generation')
+plt.ylabel('Diversity among population')
+plt.title("Evolution of diversity of genes")
+plt.legend()
+plt.show()
+"""
