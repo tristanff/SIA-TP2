@@ -108,55 +108,6 @@ tournament_size = 1
 threshold = 0.5
 
 
-selected_parents_elite = elite_selection(characters, num_elites)
-selected_parents_roulette = roulette_wheel_selection(characters, num_parents)
-selected_parents_universal = universal_selection(characters, num_parents)
-selected_parent_boltzmann = boltzmann_selection(characters, temperature)
-selected_parents_ranking = ranking_selection(characters, num_parents)
-selected_parents_deterministic = deterministic_tournament_selection(characters, num_parents,tournament_size)
-selected_parents_probabilistic = probabilistic_tournament_selection(characters,num_parents,threshold)
-
-print("Selection of parents by elite selection:")
-for parent in selected_parents_elite:
-    print(f"Name: {parent.name}, Performance: {parent.performance()}")
-
-print("\nSelection of parents by roulette wheel selection:")
-for parent in selected_parents_roulette:
-    print(f"Name: {parent.name}, Performance: {parent.performance()}")
-
-print("\nSelection of parents by universal selection:")
-for parent in selected_parents_universal:
-    print(f"Name: {parent.name}, Performance: {parent.performance()}")
-
-print("\nSelection of parent by Boltzmann selection:")
-print(f"Name: {selected_parent_boltzmann.name}, Performance: {selected_parent_boltzmann.performance()}")
-
-print("\nSelection of parents by deterministic tournaments selection:")
-for parent in selected_parents_deterministic:
-    print(f"Name: {parent.name}, Performance: {parent.performance()}")
-
-print("\nSelection of parents by probabilistic tournaments selection:")
-for parent in selected_parents_probabilistic:
-    print(f"Name: {parent.name}, Performance: {parent.performance()}")
-
-print("\nSelection of parents by rank :")
-for parent in selected_parents_ranking:
-    print(f"Name: {parent.name}, Performance: {parent.performance()}")
-
-selected_replacement_traditional = []
-selected_replacement_youth = []
-parent = characters
-for parent_character in parent:
-    child = gene_mutation(parent_character, 1)
-    selected_replacement_traditional = replacement(parent, [child], 'traditional')
-    selected_replacement_youth = replacement(parent, [child], "youth")
-print("\ntesting replacement traditional:")
-for population in selected_replacement_traditional:
-    print(population.name)
-print("\ntesting replacing youth:")
-for population in selected_replacement_youth:
-    print(population.name)
-
 character = Character("warrior", 1.75, 30, 40, 50, 20, 10)
 
 # Affichage des attributs avant la mutation
@@ -168,7 +119,7 @@ print("Proficiency items:", character.proficiency_items)
 print("Resistance items:", character.resistance_items)
 print("Life items:", character.life_items)
 
-gene_mutation(character, 1)
+gene_mutation(character, 0.5)
 
 print("\nAfter Gen Mutation :")
 print("Height:", character.height)
@@ -181,7 +132,6 @@ print("Life items:", character.life_items)
 # Mutation multigène
 multigene_mutation(character,1)
 # Mutation rate is set to 1 to test that it's actually working
-
 print("\nAfter Multi Mutation :")
 print("Height:", character.height)
 print("Strength items:", character.strength_items)
@@ -190,13 +140,17 @@ print("Proficiency items:", character.proficiency_items)
 print("Resistance items:", character.resistance_items)
 print("Life items:", character.life_items)
 
+character = Character("warrior", 1.75, 30, 40, 50, 20, 10)
+uniform_mutation([character],1)
 
-uniform_mutation(characters,0.5)
+mutated_characters = uniform_mutation([character], 1)
 
-print("\nAfter Uniform Mutation :")
-print("Height:", character.height)
-print("Strength items:", character.strength_items)
-print("Agility items:", character.agility_items)
-print("Proficiency items:", character.proficiency_items)
-print("Resistance items:", character.resistance_items)
-print("Life items:", character.life_items)
+for mutated_character in mutated_characters:
+    print("\nAfter Uniform Mutation :")
+    print("Height:", mutated_character.height)
+    print("Strength items:", mutated_character.strength_items)
+    print("Agility items:", mutated_character.agility_items)
+    print("Proficiency items:", mutated_character.proficiency_items)
+    print("Resistance items:", mutated_character.resistance_items)
+    print("Life items:", mutated_character.life_items)
+
