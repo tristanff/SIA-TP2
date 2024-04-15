@@ -21,9 +21,9 @@ def selection(population, config):
         num_parents = int(config['selection']['selection_amount'])
         return universal_selection(population, num_parents)
     elif method == 'boltzmann':
-        t0 = int(config['selection']['t0'])
-        t1 = int(config['selection']['t1'])
-        k = int(config['selection']['k'])
+        t0 = float(config['selection']['t0'])
+        t1 = float(config['selection']['t1'])
+        k = float(config['selection']['k'])
         num_parents = int(config['selection']['selection_amount'])
         temperature = t1 + (t0 - t1) * math.exp(-k * num_parents)
         return boltzmann_selection(population, num_parents, temperature)
