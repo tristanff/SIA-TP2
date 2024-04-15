@@ -13,7 +13,7 @@ def crossover(parent1, parent2, method, rate):
         if sum(child1_genes[1:]) != 150:
             child1_genes = repair(child1_genes)
         if sum(child2_genes[1:]) != 150:
-            child2_genes = repair(child2_genes)
+            child2_genes = repair(child2_genes)       
         return Character(parent1.name, *child1_genes), Character(parent1.name, *child2_genes)
     except:
         raise ValueError("Invalid crossover method: {}".format(method))
@@ -53,8 +53,9 @@ def uniform_crossover(parent1, parent2):
 
 
 def annular_crossover(parent1, parent2):
-    crossover_point = random.randint(1, len(parent1) - 1)
-    child1 = parent1[crossover_point:] + parent2[:crossover_point]
-    child2 = parent2[crossover_point:] + parent1[:crossover_point]
+    point = random.randint(2, len(parent1) - 1)
+    length = random.randint(0, len(parent1)-1 - point)
+    child1 = parent1[0:point] + parent2[point:point+length] + parent1[point+length:]
+    child2 = parent2[0:point] + parent1[point:point+length] + parent2[point+length:]
     return child1, child2
 
