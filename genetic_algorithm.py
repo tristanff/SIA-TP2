@@ -121,22 +121,23 @@ x3 = []
 
 genetic_algorithm('config.ini')
 
-"""
 import matplotlib.pyplot as plt
-plt.plot(x2, label='best fitness found so far')
-plt.plot(x1, label='generation average fitness')
+plt.subplot(3, 1, 1)
+plt.plot(x1)
 plt.xlabel('Generation')
 plt.ylabel('Fitness')
-plt.title("Evolution of average and max fitness")
-plt.legend()
-plt.show()
+plt.title("Evolution of average fitness")
 
+plt.subplot(3, 1, 2)
+plt.plot(x2)
+plt.xlabel('Generation')
+plt.ylabel('Fitness')
+plt.title("Evolution of max fitness")
 
-plt.figure()
+plt.subplot(3, 1, 3)
 plt.plot(x3)
 plt.xlabel('Generation')
 plt.ylabel('Diversity among population')
 plt.title("Evolution of diversity of genes")
-plt.legend()
+
 plt.show()
-"""
