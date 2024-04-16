@@ -126,11 +126,14 @@ def probabilistic_tournament_selection(population, num_parents, threshold):
 
 
 def ranking_selection(population, num_parents):
-    # Sort the population based on performance in descending order
     sorted_population = sorted(population, key=lambda x: x.performance(), reverse=True)
-    # Calculate selection probabilities
-    probabilities = [2 * (i + 1) / (len(population) * (len(population) + 1)) for i in range(len(population))]
-    # Select parents using ranking selection
+    rankings = []
+    total = 0
+    for i in range(len(sorted_population)):
+        pseudo_fitness = (len(sorted_population) - i) / len(sorted_population)
+        rankings.append(pseudo_fitness)
+        total += pseudo_fitness
+    probabilities = [r / total for r in rankings]
     parents = np.random.choice(sorted_population, num_parents, p=probabilities)
     return parents
 
